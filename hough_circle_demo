@@ -1,0 +1,28 @@
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+
+image = cv2.imread('/home/ejbkdb/anaconda3/envs/py36/4730_final/videos/Hough_Circle/hough1.png')
+img = cv2.medianBlur(image,5)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+cimg = image
+circles = cv2.HoughCircles(gray,cv2.HOUGH_GRADIENT,1,10,
+                            param1=50,param2=10,minRadius=0,maxRadius=0)
+
+
+circles = np.uint16(np.around(circles))
+
+for i in circles[0, :]:
+      # draw the outer circle
+
+    cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
+  # draw the center of the circle
+
+    cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
+
+
+    cv2.imshow('detected circles', cimg)
+
+    cv2.waitKey(0)
+
+    cv2.destroyAllWindows()
